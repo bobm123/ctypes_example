@@ -2,11 +2,15 @@
 import ctypes
 import testWrappedPoint
 import testPoint
+import os
 
 
 class Line(ctypes.Structure):
     _fields_ = [('start', testPoint.Point), ('end', testPoint.Point)]
-    _libc = ctypes.CDLL("./libline.so")
+    if os.name == 'nt':
+        _libc = ctypes.CDLL("./libline.dll")
+    else:
+        _libc = ctypes.CDLL("./libline.so")
 
     def __init__(self):
         a = self.get_line()

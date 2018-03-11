@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 import ctypes
+import os
 
 
 class Point(ctypes.Structure):
     _fields_ = [('x', ctypes.c_int), ('y', ctypes.c_int)]
-    _libc = ctypes.CDLL("./libpoint.so")
+    if os.name == 'nt':
+        _libc = ctypes.CDLL("./libpoint.dll")
+    else:
+        _libc = ctypes.CDLL("./libpoint.so")
 
     def __init__(self, x=None, y=None):
         if x:

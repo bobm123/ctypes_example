@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import ctypes
+import os
 
 
 def wrap_function(lib, funcname, restype, argtypes):
@@ -21,7 +22,10 @@ class Point(ctypes.Structure):
 if __name__ == '__main__':
     # load the shared library into c types.  NOTE: don't use a hard-coded path
     # in production code, please
-    libc = ctypes.CDLL("./libpoint.so")
+    if os.name == 'nt':
+        libc = ctypes.CDLL("./libpoint.dll")
+    else:
+        libc = ctypes.CDLL("./libpoint.so")
 
     ###########################################################################
     print("Pass a struct into C")
